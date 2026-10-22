@@ -1,0 +1,3 @@
+# Add third-party Python packages here.
+# tkinter ships with standard Python on Raspberry Pi OS.
+requests==2.34.2

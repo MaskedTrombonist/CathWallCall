@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=CathWallCall Kiosk
+Comment=Launch CathWallCall kiosk app at login
+Exec=/home/pi/cathwallcall/run_kiosk.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
