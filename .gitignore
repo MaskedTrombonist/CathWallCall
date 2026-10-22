@@ -16,3 +16,7 @@ venv/
 # OS/editor
 .DS_Store
 .vscode/
+
+# secrets
+credentials.json
+token.json
