@@ -1,1 +1,69 @@
-#eventually include google calendar API to pull events from the user's calendar and on the agenda
+import datetime
+import os.path
+from models.calendar_event import calendar_event 
+
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+
+SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
+
+class CalendarService:
+    def __init__(self):
+        self.creds = None
+        self.service = None
+        self.authenticate()
+
+    def authenticate(self):
+        if os.path.exists("token.json"):
+            self.creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+        if not self.creds or not self.creds.valid:
+            if self.creds and self.creds.expired and self.creds.refresh_token:
+                self.creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    "credentials.json", SCOPES
+                )
+                self.creds = flow.run_local_server(port=0)
+            with open("token.json", "w") as token:
+                token.write(self.creds.to_json())
+        self.service = build("calendar", "v3", credentials=self.creds)
+
+    
+    def get_events(self, start_time, end_time):
+        start_time = start_time.isoformat()
+        end_time = end_time.isoformat()
+        try:
+            events_result = (
+                self.service.events()
+                .list(
+                    calendarId="primary",
+                    timeMin=start_time,
+                    timeMax=end_time,
+                    singleEvents=True,
+                    orderBy="startTime",
+                )
+                .execute()
+            )
+            events = events_result.get("items", [])
+            return [self._to_event(item) for item in events]
+        except HttpError as error:
+            print(f"An error occurred: {error}")
+            return []
+
+    def _to_event(self, item):
+        start_raw = item["start"].get("dateTime") or item["start"].get("date")
+        start_time = datetime.datetime.fromisoformat(start_raw)
+        
+        end_raw = item["end"].get("dateTime") or item["end"].get("date")
+        end_time = datetime.datetime.fromisoformat(end_raw)
+
+        return calendar_event(
+            title=item.get("summary"),
+            start_time=start_time,
+            end_time=end_time,
+            location=item.get("location"),
+            description=item.get("description"),
+        )
