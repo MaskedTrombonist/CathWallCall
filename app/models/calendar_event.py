@@ -1,3 +1,5 @@
+# TODO add date, and then update the calendar service accordingly if needed
+
 class calendar_event():
     def __init__(self, title, start_time, end_time, location, description):
         self.title = title

@@ -1,8 +1,13 @@
+# TODO: Implement the TodayScreen UI with event buttons for today's events. using the create_event_button function from repeated_elements/event_button.py
+
 import tkinter as tk
 from tkinter import font
+from datetime import datetime, timedelta
+from ui.repeated_elements.event_button import create_event_button
 
 class TodayScreen:
-    def __init__(self, parent):
+    def __init__(self, parent, calendar_service):
+        self.calendar_service = calendar_service
         self.frame = tk.Frame(parent, bg="#101820")
         self.frame.pack(fill=tk.BOTH, expand=True)
 
@@ -50,8 +55,15 @@ class TodayScreen:
             )
         label.pack(pady=10)
         label.config(highlightthickness=0, bd=0)
+        self.load_events()
 
         #endregion Agenda Section
+    def load_events(self):
+        now = datetime.now().astimezone()
+        events = self.calendar_service.get_events(now, now + timedelta(days=1))
+        for event in events:
+            button = create_event_button(self.left_frame, event)
+            button.pack(pady=5)
 
     #region show/hide methods
     def show(self):

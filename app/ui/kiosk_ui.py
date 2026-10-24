@@ -1,6 +1,7 @@
 import datetime
 import tkinter as tk
 from pathlib import Path 
+from services import dummy_calendar_service
 from ui.image_loader import make_icon
 from ui.screens.today_screen import TodayScreen
 from ui.screens.Month_screen import MonthScreen
@@ -8,12 +9,13 @@ from ui.weather_widget import weatherWidget
 from services.weather_service import WeatherService
 
 
+
 class KioskUI:
     #region screen management
 
     def show_today(self):
         if "today" not in self.screens:
-            self.screens["today"] = TodayScreen(self.content_frame)
+            self.screens["today"] = TodayScreen(self.content_frame, dummy_calendar_service.DummyCalendarService())
         self._switch_to(self.screens["today"])
 
     def show_month(self):
@@ -60,7 +62,7 @@ class KioskUI:
         self.content_frame = tk.Frame(self.body)
         self.content_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.content_frame.configure(bg=self.bg)
-
+        # events = self.calendar_service.get_events(now, now + timedelta(days=1))
         #endregion layout frames
 
         #region menu frame widgets and buttons
