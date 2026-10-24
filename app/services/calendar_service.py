@@ -1,6 +1,6 @@
 import datetime
 import os.path
-from models.calendar_event import calendar_event 
+from app.models.calendar_event import calendar_event 
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
