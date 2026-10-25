@@ -1,22 +1,23 @@
 from pathlib import Path
 import tkinter as tk
 from ui.image_loader import make_icon
+from ui.colors import background_color, foreground_color
 
 class weatherWidget():
     def __init__(self, parent, service):
         self.parent = parent
         self.service = service
 
-        self.frame = tk.Frame(self.parent, bg="#101820", borderwidth=2, relief="solid")
+        self.frame = tk.Frame(self.parent, bg=background_color, borderwidth=2, relief="solid")
         self.frame.pack(fill=tk.X, padx=10, pady=10)
         self.frame.config(highlightthickness=0, bd=0)
 
         #Region temperature icon and label
-        self.temperature_icon = make_icon("app/ui/icons/thermometer.svg", color="#fffff0", size=(30, 30), output_path="app/ui/icons/thermometer.png")  # Default icon
+        self.temperature_icon = make_icon("app/ui/icons/thermometer.svg", color=foreground_color, size=(30, 30), output_path="app/ui/icons/thermometer.png")  # Default icon
         self.temperature_icon_label = tk.Label(
             self.frame,
             image=self.temperature_icon,
-            bg="#101820",
+            bg=background_color,
         )
         self.temperature_icon_label.pack(side=tk.LEFT, padx=10, pady=10)
         #endregion temperature icon and label
@@ -27,18 +28,18 @@ class weatherWidget():
             self.frame,
             text="Weather",
             font=("DejaVu Sans", 12, "bold"),
-            fg="#fffff0",
-            bg="#101820",
+            fg=foreground_color,
+            bg=background_color,
         )
         self.weather_label.pack(side=tk.LEFT, padx=10, pady=10)
         #endregion weather icon and label
 
         #region weather icon
-        weather_icon = make_icon("app/ui/icons/sun.svg", color="#fffff0", size=(30, 30), output_path="app/ui/icons/day.png")
+        weather_icon = make_icon("app/ui/icons/sun.svg", color=foreground_color, size=(30, 30), output_path="app/ui/icons/day.png")
         self.weather_icon_label = tk.Label(
             self.frame,
             image=weather_icon,
-            bg="#101820",
+            bg=background_color,
         )
         self.weather_icon_label.pack(side=tk.RIGHT, padx=10, pady=10)
         #endregion weather icon
@@ -54,12 +55,12 @@ class weatherWidget():
         # Get filename from DetermineWeatherIcon
         icon_svg = self.DetermineWeatherIcon(weather['weathercode'])
         icon_path = Path(__file__).parent / "icons" / icon_svg
-        make_icon(str(icon_path), color="#fffff0", size=(30, 30), output_path="app/ui/icons/weather.png")
+        make_icon(str(icon_path), color=foreground_color, size=(30, 30), output_path="app/ui/icons/weather.png")
 
         #get filename from DetermineTemperatureIcon
         temp_icon_svg = self.DetermineTemperatureIcon(weather['temperature'])
         temp_icon_path = Path(__file__).parent / "icons" / temp_icon_svg
-        make_icon(str(temp_icon_path), color="#fffff0", size=(30, 30), output_path="app/ui/icons/thermometer.png")
+        make_icon(str(temp_icon_path), color=foreground_color, size=(30, 30), output_path="app/ui/icons/thermometer.png")
         
         # Load the image and update the label
         new_icon = tk.PhotoImage(file=f"app/ui/icons/weather.png")

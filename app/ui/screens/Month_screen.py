@@ -1,13 +1,14 @@
 import tkinter as tk
+from ui.colors import background_color, foreground_color
 
 class MonthScreen:
     def __init__(self, parent):
-        self.frame = tk.Frame(parent, bg="#101820")
+        self.frame = tk.Frame(parent, bg=background_color)
         self.frame.pack(fill=tk.BOTH, expand=True)
         
-        title = tk.Label(self.frame, text="Month", fg="#fffff0", bg="#101820")
+        title = tk.Label(self.frame, text="Month", fg=foreground_color, bg=background_color)
         title.pack(pady=20)
-        label = tk.Label(self.frame, text="This is the Month screen.", fg="#fffff0", bg="#101820")
+        label = tk.Label(self.frame, text="This is the Month screen.", fg=foreground_color, bg=background_color)
         label.pack(pady=10)
 
 

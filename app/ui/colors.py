@@ -1,0 +1,6 @@
+background_color = "#101820"
+foreground_color = "#fffff0"
+highlight_color = "#f2aa4c"
+button_color = "#f2aa4c"
+text_color = "#fffff0"
+highlight_text_color = "#101820"

@@ -4,11 +4,12 @@ import tkinter as tk
 from tkinter import font
 from datetime import datetime, timedelta
 from ui.repeated_elements.event_button import create_event_button
+from ui.colors import background_color, foreground_color
 
 class TodayScreen:
     def __init__(self, parent, calendar_service):
         self.calendar_service = calendar_service
-        self.frame = tk.Frame(parent, bg="#101820")
+        self.frame = tk.Frame(parent, bg=background_color)
         self.frame.pack(fill=tk.BOTH, expand=True)
 
         #region Frames
@@ -16,28 +17,28 @@ class TodayScreen:
         #region title frames
         self.title_font = font.Font(family="DejaVu Sans", size=50, weight="bold")
 
-        self.top_frame = tk.Frame(self.frame, bg="#101820")
+        self.top_frame = tk.Frame(self.frame, bg=background_color)
         self.top_frame.pack(side=tk.TOP, fill=tk.X, expand=False)
         label = tk.Label(
             self.top_frame, 
             text="Today", 
-            fg="#fffff0", 
-            bg="#101820",
+            fg=foreground_color, 
+            bg=background_color,
             font=self.title_font
             )
         label.pack(pady=20)
-        self.top_line = tk.Frame(self.top_frame, bg="#fffff0", height=2)
+        self.top_line = tk.Frame(self.top_frame, bg=foreground_color, height=2)
         self.top_line.pack(fill=tk.X, padx=20, pady=(0, 20))
 
         #endregion title frame
 
-        self.right_frame = tk.Frame(self.frame, bg="#101820")
+        self.right_frame = tk.Frame(self.frame, bg=background_color)
         self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        self.middle_line = tk.Frame(self.frame, bg="#fffff0", width=2)
+        self.middle_line = tk.Frame(self.frame, bg=foreground_color, width=2)
         self.middle_line.pack(side=tk.RIGHT, fill=tk.Y, padx=20, pady=(0, 20))  
 
-        self.left_frame = tk.Frame(self.frame, bg="#101820")
+        self.left_frame = tk.Frame(self.frame, bg=background_color)
         self.left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)   
 
         #endregion Frames
@@ -47,8 +48,8 @@ class TodayScreen:
         label = tk.Label(
             self.left_frame, 
             text="Events today", 
-            fg="#fffff0", 
-            bg="#101820",
+            fg=foreground_color, 
+            bg=background_color,
             borderwidth=2,
             relief="solid",
             font=("DejaVu Sans", 20, "bold") 

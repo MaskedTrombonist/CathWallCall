@@ -7,6 +7,7 @@ from ui.screens.today_screen import TodayScreen
 from ui.screens.Month_screen import MonthScreen
 from ui.weather_widget import weatherWidget
 from services.weather_service import WeatherService
+from ui.colors import background_color, foreground_color, button_color, text_color, highlight_text_color
 
 
 
@@ -35,10 +36,10 @@ class KioskUI:
         self.root.title("CathWallCall Kiosk")
         # Fullscreen kiosk mode.
         self.root.attributes("-fullscreen", True)
-        self.root.configure(bg="#101820")
+        self.root.configure(bg=background_color)
         #Optional emergency exit for development. 
         self.root.bind("<Escape>", self._exit)
-        self.bg = "#101820"  # Dark background color
+        self.bg = background_color  # Dark background color
         self.screens = {}
         self.current_screen = None
         
@@ -55,7 +56,7 @@ class KioskUI:
         self.menu_frame.configure(bg=self.bg)
 
         # center line frame (for visual separation)
-        self.center_line = tk.Frame(self.body, width=2, bg="#fffff0")
+        self.center_line = tk.Frame(self.body, width=2, bg=foreground_color)
         self.center_line.pack(side=tk.RIGHT, fill=tk.Y)
 
         # Left content frame (where screens go)
@@ -70,7 +71,7 @@ class KioskUI:
             self.menu_frame,
             text="",
             font=("DejaVu Sans", 20, "bold"),
-            fg="#fffff0",
+            fg=foreground_color,
             bg=self.bg,
         )
         self.clock_label.pack(side=tk.TOP, padx=10, pady=10, fill=tk.X)
@@ -81,14 +82,14 @@ class KioskUI:
         
         #region day button
         day_icon_path = Path(__file__).parent / "icons" / "sun.svg"
-        make_icon(day_icon_path, color="#fffff0", size=(60, 60), output_path="app/ui/icons/day.png")
+        make_icon(day_icon_path, color=foreground_color, size=(60, 60), output_path="app/ui/icons/day.png")
         self.day_icon = tk.PhotoImage(file="app/ui/icons/day.png")
         self.day_button = tk.Button(
             self.menu_frame,
             text="Day",
             image=self.day_icon,
             font=("DejaVu Sans", 10, "bold"),
-            fg="#fffff0",
+            fg=foreground_color,
             bg=self.bg,
             relief=tk.FLAT,
             bd=0,
@@ -101,14 +102,14 @@ class KioskUI:
 
         #region calendar button
         calendar_icon_path = Path(__file__).parent / "icons" / "calendar-days.svg"
-        make_icon(calendar_icon_path, color="#fffff0", size=(60, 60), output_path="app/ui/icons/calendar-days.png")
+        make_icon(calendar_icon_path, color=foreground_color, size=(60, 60), output_path="app/ui/icons/calendar-days.png")
         self.calendar_icon = tk.PhotoImage(file="app/ui/icons/calendar-days.png")
         self.calendar_button = tk.Button(
             self.menu_frame,
             text="Calendar",
             image=self.calendar_icon,
             font=("DejaVu Sans", 10, "bold"),
-            fg="#fffff0",
+            fg=foreground_color,
             bg=self.bg,
             relief=tk.FLAT,
             bd=0,
@@ -121,14 +122,14 @@ class KioskUI:
 
         #region settings button
         settings_icon_path = Path(__file__).parent / "icons" / "settings.svg"
-        make_icon(settings_icon_path, color="#fffff0", size=(60, 60), output_path="app/ui/icons/settings.png")
+        make_icon(settings_icon_path, color=foreground_color, size=(60, 60), output_path="app/ui/icons/settings.png")
         self.settings_icon = tk.PhotoImage(file="app/ui/icons/settings.png")
         self.settings_button = tk.Button(
             self.menu_frame,
             text="Settings",
             image=self.settings_icon,
             font=("DejaVu Sans", 10, "bold"),
-            fg="#fffff0",
+            fg=foreground_color,
             bg=self.bg,
             relief=tk.FLAT,
             bd=0,
