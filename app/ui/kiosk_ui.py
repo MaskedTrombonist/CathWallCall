@@ -5,10 +5,11 @@ from services import dummy_calendar_service
 from ui.image_loader import make_icon
 from ui.screens.today_screen import TodayScreen
 from ui.screens.Month_screen import MonthScreen
+from ui.screens.SettingsScreen import SettingsScreen
 from ui.weather_widget import weatherWidget
 from services.weather_service import WeatherService
 from ui.colors import background_color, foreground_color, button_color, text_color, highlight_text_color
-
+from ui.repeated_elements.Sidebar_buttons import create_sidebar_button
 
 
 class KioskUI:
@@ -23,6 +24,11 @@ class KioskUI:
         if "month" not in self.screens:
             self.screens["month"] = MonthScreen(self.content_frame)
         self._switch_to(self.screens["month"])
+
+    def show_settings(self):
+        if "settings" not in self.screens:
+            self.screens["settings"] = SettingsScreen(self.content_frame)
+        self._switch_to(self.screens["settings"])
 
     def _switch_to(self, screen):
         if self.current_screen:
@@ -39,7 +45,7 @@ class KioskUI:
         self.root.configure(bg=background_color)
         #Optional emergency exit for development. 
         self.root.bind("<Escape>", self._exit)
-        self.bg = background_color  # Dark background color
+        self.bg = background_color
         self.screens = {}
         self.current_screen = None
         
@@ -81,63 +87,52 @@ class KioskUI:
         self.weather_widget = weatherWidget(self.menu_frame, service=weather_service)
         
         #region day button
-        day_icon_path = Path(__file__).parent / "icons" / "sun.svg"
-        make_icon(day_icon_path, color=foreground_color, size=(60, 60), output_path="app/ui/icons/day.png")
-        self.day_icon = tk.PhotoImage(file="app/ui/icons/day.png")
-        self.day_button = tk.Button(
-            self.menu_frame,
-            text="Day",
-            image=self.day_icon,
-            font=("DejaVu Sans", 10, "bold"),
-            fg=foreground_color,
-            bg=self.bg,
-            relief=tk.FLAT,
-            bd=0,
-            height=100,
-            highlightthickness=0,
-        )
-        self.day_button.pack(side=tk.TOP, padx=10, pady=5, fill=tk.X)
-        self.day_button.config(command=self.show_today)
-        #endregion day button
 
-        #region calendar button
-        calendar_icon_path = Path(__file__).parent / "icons" / "calendar-days.svg"
-        make_icon(calendar_icon_path, color=foreground_color, size=(60, 60), output_path="app/ui/icons/calendar-days.png")
-        self.calendar_icon = tk.PhotoImage(file="app/ui/icons/calendar-days.png")
-        self.calendar_button = tk.Button(
+        create_sidebar_button(
             self.menu_frame,
-            text="Calendar",
-            image=self.calendar_icon,
-            font=("DejaVu Sans", 10, "bold"),
-            fg=foreground_color,
-            bg=self.bg,
-            relief=tk.FLAT,
-            bd=0,
-            height=100,
-            highlightthickness=0,
+            button_name="Day",
+            icon_name="sun",
+            icon_path=Path(__file__).parent / "icons" / "sun.svg",
+            command=self.show_today,
+            side=tk.TOP
         )
-        self.calendar_button.pack(side=tk.TOP, padx=10, pady=5, fill=tk.X)
-        self.calendar_button.config(command=self.show_month)
-        #endregion calendar button
 
-        #region settings button
-        settings_icon_path = Path(__file__).parent / "icons" / "settings.svg"
-        make_icon(settings_icon_path, color=foreground_color, size=(60, 60), output_path="app/ui/icons/settings.png")
-        self.settings_icon = tk.PhotoImage(file="app/ui/icons/settings.png")
-        self.settings_button = tk.Button(
+        # day_icon_path = Path(__file__).parent / "icons" / "sun.svg"
+        # make_icon(day_icon_path, color=foreground_color, size=(60, 60), output_path="app/ui/icons/day.png")
+        # self.day_icon = tk.PhotoImage(file="app/ui/icons/day.png")
+        # self.day_button = tk.Button(
+        #     self.menu_frame,
+        #     text="Day",
+        #     image=self.day_icon,
+        #     font=("DejaVu Sans", 10, "bold"),
+        #     fg=foreground_color,
+        #     bg=self.bg,
+        #     relief=tk.FLAT,
+        #     bd=0,
+        #     height=100,
+        #     highlightthickness=0,
+        # )
+        # self.day_button.pack(side=tk.TOP, padx=10, pady=5, fill=tk.X)
+        # self.day_button.config(command=self.show_today)
+        # #endregion day button
+
+        create_sidebar_button(
             self.menu_frame,
-            text="Settings",
-            image=self.settings_icon,
-            font=("DejaVu Sans", 10, "bold"),
-            fg=foreground_color,
-            bg=self.bg,
-            relief=tk.FLAT,
-            bd=0,
-            height=100,
-            highlightthickness=0,
+            button_name="Calendar",
+            icon_name="calendar-days",
+            icon_path=Path(__file__).parent / "icons" / "calendar-days.svg",
+            command=self.show_month,
+            side=tk.TOP
         )
-        self.settings_button.pack(side=tk.BOTTOM, padx=10, pady=5, fill=tk.X)
-        #endregion settings button
+
+        create_sidebar_button(
+            self.menu_frame,
+            button_name="Settings",
+            icon_name="settings",
+            icon_path=Path(__file__).parent / "icons" / "settings.svg",
+            command=self.show_settings,
+            side=tk.BOTTOM
+        )
 
         #endregion menu frame widgets
 

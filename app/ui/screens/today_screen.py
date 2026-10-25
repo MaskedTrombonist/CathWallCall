@@ -13,10 +13,8 @@ class TodayScreen:
         self.frame.pack(fill=tk.BOTH, expand=True)
 
         #region Frames
-
         #region title frames
         self.title_font = font.Font(family="DejaVu Sans", size=50, weight="bold")
-
         self.top_frame = tk.Frame(self.frame, bg=background_color)
         self.top_frame.pack(side=tk.TOP, fill=tk.X, expand=False)
         label = tk.Label(
@@ -44,7 +42,6 @@ class TodayScreen:
         #endregion Frames
     
         #region Agenda Section
-
         label = tk.Label(
             self.left_frame, 
             text="Events today", 
@@ -57,19 +54,18 @@ class TodayScreen:
         label.pack(pady=10)
         label.config(highlightthickness=0, bd=0)
         self.load_events()
-
         #endregion Agenda Section
+
     def load_events(self):
         now = datetime.now().astimezone()
         events = self.calendar_service.get_events(now, now + timedelta(days=1))
         for event in events:
             button = create_event_button(self.left_frame, event)
             button.pack(pady=5)
-
     #region show/hide methods
+
     def show(self):
         self.frame.pack(fill=tk.BOTH, expand=True)
-    
     def hide(self):
         self.frame.pack_forget()
     #endregion show/hide methods
