@@ -86,8 +86,6 @@ class KioskUI:
         weather_service = WeatherService()  # Create an instance of your weather service
         self.weather_widget = weatherWidget(self.menu_frame, service=weather_service)
         
-        #region day button
-
         create_sidebar_button(
             self.menu_frame,
             button_name="Day",
@@ -96,25 +94,6 @@ class KioskUI:
             command=self.show_today,
             side=tk.TOP
         )
-
-        # day_icon_path = Path(__file__).parent / "icons" / "sun.svg"
-        # make_icon(day_icon_path, color=foreground_color, size=(60, 60), output_path="app/ui/icons/day.png")
-        # self.day_icon = tk.PhotoImage(file="app/ui/icons/day.png")
-        # self.day_button = tk.Button(
-        #     self.menu_frame,
-        #     text="Day",
-        #     image=self.day_icon,
-        #     font=("DejaVu Sans", 10, "bold"),
-        #     fg=foreground_color,
-        #     bg=self.bg,
-        #     relief=tk.FLAT,
-        #     bd=0,
-        #     height=100,
-        #     highlightthickness=0,
-        # )
-        # self.day_button.pack(side=tk.TOP, padx=10, pady=5, fill=tk.X)
-        # self.day_button.config(command=self.show_today)
-        # #endregion day button
 
         create_sidebar_button(
             self.menu_frame,
